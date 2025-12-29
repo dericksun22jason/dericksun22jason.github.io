@@ -1,24 +1,222 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>dericksun22jason<title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dericksun22jason | 个人网站</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             text-align: center;
-            padding: 50px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            padding: 60px 20px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background: #f8f9fa;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background: #667eea;
             color: white;
         }
-        h1 {
-            font-size: 48px;
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        h2 {
+            color: #667eea;
             margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .skill {
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .project {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            color: #666;
+            border-top: 1px solid #eaeaea;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .content { padding: 20px; }
+            nav { flex-wrap: wrap; gap: 15px; }
         }
     </style>
 </head>
 <body>
-    <h1>Hello dericksun22jason!</h1>
-    <p>这是我的第一个网站</p>
-    <p>🌐 现在全世界都能访问了！</p>
+    <div class="container">
+        <header>
+            <h1>dericksun22jason</h1>
+            <p class="subtitle">开发者 | 学习者 | 探索者</p>
+            <p>这是我的GitHub Pages个人网站</p>
+        </header>
+        
+        <nav>
+            <a href="#about">关于我</a>
+            <a href="#skills">技能</a>
+            <a href="#projects">项目</a>
+            <a href="#contact">联系</a>
+        </nav>
+        
+        <div class="content">
+            <section id="about" class="section">
+                <h2>👨‍💻 关于我</h2>
+                <p>你好！我是 <strong>dericksun22jason</strong>，一个对技术和编程充满热情的开发者。</p>
+                <p>我正在学习Web开发、Python编程和各种有趣的技术。</p>
+                <p>这个网站是我使用 <strong>GitHub Pages</strong> 创建的，用来记录我的学习历程和展示项目。</p>
+            </section>
+            
+            <section id="skills" class="section">
+                <h2>🛠️ 技能栈</h2>
+                <div class="skills">
+                    <span class="skill">HTML5</span>
+                    <span class="skill">CSS3</span>
+                    <span class="skill">JavaScript</span>
+                    <span class="skill">Python</span>
+                    <span class="skill">Git</span>
+                    <span class="skill">GitHub</span>
+                    <span class="skill">命令行</span>
+                    <span class="skill">VS Code</span>
+                    <span class="skill">Flask</span>
+                    <span class="skill">Markdown</span>
+                </div>
+            </section>
+            
+            <section id="projects" class="section">
+                <h2>🚀 我的项目</h2>
+                
+                <div class="project">
+                    <h3>个人网站</h3>
+                    <p>当前网站，使用纯HTML/CSS构建，部署在GitHub Pages</p>
+                    <p><strong>技术栈：</strong> HTML, CSS, GitHub Pages</p>
+                </div>
+                
+                <div class="project">
+                    <h3>GitHub学习项目</h3>
+                    <p>学习Git版本控制和GitHub协作开发</p>
+                    <p>包括仓库管理、分支操作、Pull Request等</p>
+                </div>
+                
+                <div class="project">
+                    <h3>Python自动化工具</h3>
+                    <p>各种Python脚本和自动化工具</p>
+                    <p>文件处理、数据整理、网页爬虫等</p>
+                </div>
+            </section>
+            
+            <section id="contact" class="section">
+                <h2>📞 联系方式</h2>
+                <p>📧 邮箱：dericksun22@gmail.com</p>
+                <p>🐙 GitHub：<a href="https://github.com/dericksun22jason" style="color: #667eea;">github.com/dericksun22jason</a></p>
+                <p>🌐 网站：<a href="https://dericksun22jason.github.io" style="color: #667eea;">dericksun22jason.github.io</a></p>
+            </section>
+        </div>
+        
+        <footer>
+            <p>© 2024 dericksun22jason. 保留所有权利。</p>
+            <p>由 GitHub Pages 驱动 • 最后更新: 2024年12月</p>
+            <p style="margin-top: 10px; font-size: 0.9rem; color: #888;">
+                访问量: <span id="counter">1</span> 次
+            </p>
+        </footer>
+    </div>
+    
+    <script>
+        // 简单的访问计数器
+        let count = localStorage.getItem('visitCount') || 0;
+        count = parseInt(count) + 1;
+        localStorage.setItem('visitCount', count);
+        document.getElementById('counter').textContent = count;
+        
+        // 平滑滚动
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
 </body>
 </html>
