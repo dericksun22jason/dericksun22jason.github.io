@@ -6,10 +6,7 @@
     <title>dericksun22jason | 个人主页</title>
     <meta name="description" content="dericksun22jason的个人技术主页，专注前端与Python">
     <meta name="theme-color" content="#4361ee">
-    
-    <!-- Font Awesome 图标 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
     <style>
         :root {
             --primary: #4361ee;
@@ -22,7 +19,6 @@
             --radius: 16px;
             --transition: all 0.3s ease;
         }
-        
         @media (prefers-color-scheme: dark) {
             :root {
                 --text: #e0e0e0;
@@ -32,7 +28,6 @@
             }
             body { background: #0a0a0a; }
         }
-        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -40,166 +35,88 @@
             color: var(--text);
             background: var(--bg);
             padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            min-height: 100vh;
         }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* 顶部导航 */
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
+            position: fixed; top: 0; left: 0; right: 0;
             background: var(--card-bg);
             backdrop-filter: blur(10px);
             box-shadow: var(--shadow);
-            z-index: 1000;
-            height: 64px;
+            z-index: 1000; height: 64px;
         }
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            height: 100%; max-width: 1000px; margin: 0 auto; padding: 0 20px;
         }
-        .logo {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--primary);
-            text-decoration: none;
-        }
+        .logo { font-size: 1.4rem; font-weight: bold; color: var(--primary); text-decoration: none; }
+        .menu-btn { font-size: 1.6rem; background: none; border: none; color: var(--text); cursor: pointer; }
         .nav-links {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 64px; left: 0; right: 0;
-            background: var(--card-bg);
-            box-shadow: var(--shadow);
+            display: none; flex-direction: column;
+            position: absolute; top: 64px; left: 0; right: 0;
+            background: var(--card-bg); box-shadow: var(--shadow);
         }
         .nav-links.active { display: flex; }
         .nav-links a {
-            padding: 16px 20px;
-            color: var(--text);
-            text-decoration: none;
+            padding: 16px 20px; color: var(--text); text-decoration: none;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         .nav-links a:hover { background: rgba(67,97,238,0.1); color: var(--primary); }
-        .menu-btn {
-            font-size: 1.6rem;
-            background: none;
-            border: none;
-            color: var(--text);
-            cursor: pointer;
-            padding: 8px;
-        }
-        
         @media (min-width: 768px) {
             .nav-links { display: flex; flex-direction: row; position: static; box-shadow: none; }
             .nav-links a { border: none; padding: 0 20px; }
             .menu-btn { display: none; }
         }
-        
-        /* 主内容 */
         main { padding-top: 80px; }
         section { padding: 80px 0; }
         h1 { font-size: 2.5rem; margin-bottom: 16px; color: var(--primary); text-align: center; }
         .subtitle { text-align: center; font-size: 1.2rem; color: var(--text-light); margin-bottom: 40px; }
-        
-        .about {
-            display: grid;
-            gap: 40px;
-            align-items: center;
-            grid-template-columns: 1fr;
-        }
-        @media (min-width: 768px) {
-            .about { grid-template-columns: 1fr 1fr; }
-        }
+        .about { display: grid; gap: 40px; grid-template-columns: 1fr; align-items: center; }
+        @media (min-width: 768px) { .about { grid-template-columns: 1fr 1fr; } }
         .avatar {
-            text-align: center;
-            font-size: 6rem;
-            width: 180px;
-            height: 180px;
+            width: 180px; height: 180px; margin: 0 auto;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
+            color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 6rem;
         }
-        
-        .skills-grid {
-            display: grid;
+        .skills-grid, .projects-grid {
+            display: grid; gap: 24px;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
         }
-        .card {
-            background: var(--card-bg);
-            padding: 28px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
+        .card, .project {
+            background: var(--card-bg); border-radius: var(--radius);
+            box-shadow: var(--shadow); transition: var(--transition); overflow: hidden;
         }
-        .card:hover { transform: translateY(-8px); }
+        .card:hover, .project:hover { transform: translateY(-8px); }
+        .card { padding: 28px; }
         .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 16px;
+            display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px;
         }
         .tag {
-            background: rgba(67,97,238,0.1);
-            color: var(--primary);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.95rem;
-        }
-        
-        .projects-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 32px;
-        }
-        @media (min-width: 640px) {
-            .projects-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-        }
-        .project {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
+            background: rgba(67,97,238,0.1); color: var(--primary);
+            padding: 8px 16px; border-radius: 50px; font-size: 0.95rem;
         }
         .project-img {
-            height: 200px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
+            height: 200px; background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 3rem;
         }
         .project-body { padding: 24px; }
         .links { margin-top: 16px; display: flex; gap: 16px; }
         .links a { color: var(--primary); text-decoration: none; }
-        
         footer {
-            text-align: center;
-            padding: 40px 0;
-            color: var(--text-light);
-            font-size: 0.9rem;
+            text-align: center; padding: 40px 0;
+            color: var(--text-light); font-size: 0.9rem;
         }
+        .section-title { text-align: center; margin-bottom: 40px; }
     </style>
 </head>
 <body>
     <header>
         <nav class="container">
             <a href="#" class="logo">dericksun22jason</a>
-            <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+            <button class="menu-btn" id="menuBtn" aria-label="菜单"><i class="fas fa-bars"></i></button>
             <div class="nav-links" id="navLinks">
                 <a href="#home">首页</a>
                 <a href="#about">关于</a>
@@ -222,61 +139,23 @@
                 <div>
                     <h2>关于我</h2>
                     <p>热爱写代码，专注前端开发与Python自动化。喜欢折腾移动端优化、响应式设计，也在探索各种有趣的技术。</p>
-                    <p>这个网站就是用纯 HTML + CSS + 少量 JS 搭建的单文件个人站，专为手机优化。</p>
+                    <p>这个网站用 HTML + CSS + JavaScript 搭建，数据驱动渲染，专为手机优化。</p>
                 </div>
             </div>
         </section>
 
         <section id="skills" class="container">
-            <h2 style="text-align:center;margin-bottom:40px;">技术技能</h2>
-            <div class="skills-grid">
-                <div class="card">
-                    <h3><i class="fas fa-code"></i> 前端</h3>
-                    <div class="skill-tags">
-                        <span class="tag">HTML5</span>
-                        <span class="tag">CSS3</span>
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">响应式设计</span>
-                        <span class="tag">移动端优化</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3><i class="fas fa-server"></i> 后端/工具</h3>
-                    <div class="skill-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">Flask</span>
-                        <span class="tag">Git</span>
-                        <span class="tag">GitHub</span>
-                    </div>
-                </div>
-            </div>
+            <h2 class="section-title">技术技能</h2>
+            <div class="skills-grid" id="skillsGrid"></div>
         </section>
 
         <section id="projects" class="container">
-            <h2 style="text-align:center;margin-bottom:40px;">项目展示</h2>
-            <div class="projects-grid">
-                <div class="project">
-                    <div class="project-img"><i class="fas fa-mobile-alt"></i></div>
-                    <div class="project-body">
-                        <h3>移动端个人网站</h3>
-                        <p>当前这个网站，纯静态、手机优先、支持深色模式。</p>
-                        <div class="links">
-                            <a href="https://github.com/dericksun22jason" target="_blank"><i class="fab fa-github"></i> 源码</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project">
-                    <div class="project-img"><i class="fas fa-robot"></i></div>
-                    <div class="project-body">
-                        <h3>Python 自动化脚本</h3>
-                        <p>文件整理、数据抓取、日常任务自动化。</p>
-                    </div>
-                </div>
-            </div>
+            <h2 class="section-title">项目展示</h2>
+            <div class="projects-grid" id="projectsGrid"></div>
         </section>
 
         <section id="contact" class="container">
-            <h2 style="text-align:center;margin-bottom:40px;">联系我</h2>
+            <h2 class="section-title">联系我</h2>
             <div style="text-align:center;">
                 <p style="margin-bottom:24px;">欢迎交流技术或分享经验～</p>
                 <p>
@@ -294,17 +173,94 @@
     </footer>
 
     <script>
-        // 移动端菜单切换
+        // 数据驱动：技能和项目
+        const skills = [
+            {
+                icon: "fa-code",
+                title: "前端",
+                tags: ["HTML5", "CSS3", "JavaScript", "响应式设计", "移动端优化"]
+            },
+            {
+                icon: "fa-server",
+                title: "后端/工具",
+                tags: ["Python", "Flask", "Git", "GitHub"]
+            }
+        ];
+
+        const projects = [
+            {
+                icon: "fa-mobile-alt",
+                title: "移动端个人网站",
+                desc: "当前这个网站，纯静态、手机优先、支持深色模式、数据驱动渲染。",
+                links: [{ icon: "fab fa-github", text: "源码", url: "https://github.com/dericksun22jason" }]
+            },
+            {
+                icon: "fa-robot",
+                title: "Python 自动化脚本",
+                desc: "文件整理、数据抓取、日常任务自动化。",
+                links: []
+            }
+        ];
+
+        // 渲染技能卡片
+        function renderSkills() {
+            const grid = document.getElementById('skillsGrid');
+            grid.innerHTML = skills.map(skill => `
+                <div class="card">
+                    <h3><i class="fas ${skill.icon}"></i> ${skill.title}</h3>
+                    <div class="skill-tags">
+                        ${skill.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 渲染项目卡片
+        function renderProjects() {
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = projects.map(proj => `
+                <div class="project">
+                    <div class="project-img"><i class="fas ${proj.icon}"></i></div>
+                    <div class="project-body">
+                        <h3>${proj.title}</h3>
+                        <p>${proj.desc}</p>
+                        ${proj.links.length > 0 ? `
+                        <div class="links">
+                            ${proj.links.map(link => `
+                                <a href="${link.url}" target="_blank">
+                                    <i class="${link.icon}"></i> ${link.text}
+                                </a>
+                            `).join('')}
+                        </div>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 移动端菜单
         document.getElementById('menuBtn').addEventListener('click', () => {
             document.getElementById('navLinks').classList.toggle('active');
         });
-        
-        // 点击链接后关闭菜单（手机端）
+
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 document.getElementById('navLinks').classList.remove('active');
             });
         });
+
+        // 平滑滚动（可选增强）
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 初始化
+        renderSkills();
+        renderProjects();
     </script>
 </body>
 </html>
