@@ -741,71 +741,79 @@
         </section>
 
         <!-- 联系 -->
-        <section id="contact">
-            <h2 class="section-title">联系我</h2>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h3>获取联系</h3>
-                    <p>如果你对我的工作感兴趣，或者想要讨论合作机会，欢迎随时联系我。</p>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h4>邮箱</h4>
-                            <p>dericksun22@gmail.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-github"></i>
-                        </div>
-                        <div>
-                            <h4>GitHub</h4>
-                            <p>github.com/dericksun22jason</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h4>位置</h4>
-                            <p>全球远程</p>
-                        </div>
-                    </div>
+<section id="contact">
+    <h2 class="section-title">找到我</h2>
+    <div class="contact-grid">
+        <div class="contact-info">
+            <h3>联系方式</h3>
+            <p>欢迎交流技术问题、分享学习心得，或者只是想打个招呼！</p>
+            
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
                 </div>
-                
-                <div class="card">
-                    <h3 style="margin-bottom: 20px;">发送消息</h3>
-                    <form id="contact-form" onsubmit="return submitForm()">
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">姓名</label>
-                            <input type="text" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit;">
-                        </div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">邮箱</label>
-                            <input type="email" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit;">
-                        </div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">消息</label>
-                            <textarea required rows="5" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit;"></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn" style="width: 100%;">
-                            <i class="fas fa-paper-plane"></i>
-                            发送消息
-                        </button>
-                    </form>
+                <div>
+                    <h4>邮箱</h4>
+                    <p>dericksun22@gmail.com</p>
+                    <p style="font-size: 0.9rem; color: #666;">（技术交流/问题讨论）</p>
                 </div>
             </div>
-        </section>
-    </main>
+            
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fab fa-github"></i>
+                </div>
+                <div>
+                    <h4>GitHub</h4>
+                    <p><a href="https://github.com/dericksun22jason" style="color: var(--primary-color); text-decoration: none;">github.com/dericksun22jason</a></p>
+                    <p style="font-size: 0.9rem; color: #666;">（查看我的代码和项目）</p>
+                </div>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div>
+                    <h4>网站</h4>
+                    <p><a href="https://dericksun22jason.github.io" style="color: var(--primary-color); text-decoration: none;">dericksun22jason.github.io</a></p>
+                    <p style="font-size: 0.9rem; color: #666;">（就是这个网站啦）</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 style="margin-bottom: 20px;">留言板</h3>
+            <p style="margin-bottom: 20px; color: #666;">有什么想说的可以在这里留言（仅作展示，功能待完善）</p>
+            
+            <form id="contact-form" onsubmit="return submitForm()">
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">昵称</label>
+                    <input type="text" placeholder="你的名字或昵称" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit;">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">留言内容</label>
+                    <textarea placeholder="有什么想分享的吗？" required rows="5" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit;"></textarea>
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%;">
+                    <i class="fas fa-comment-dots"></i>
+                    发布留言
+                </button>
+            </form>
+            
+            <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                <h4 style="margin-bottom: 10px;">留言须知</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem; color: #666;">
+                    <li>留言仅作功能演示</li>
+                    <li>欢迎技术交流和学习讨论</li>
+                    <li>请保持友善的交流氛围</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- 页脚 -->
     <footer>
