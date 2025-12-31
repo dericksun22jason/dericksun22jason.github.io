@@ -2,1143 +2,308 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <!-- 手机优化关键：禁止缩放锁定，允许用户缩放 -->
-    <title>dericksun22jason | 手机友好个人站</title>
-    <meta name="description" content="dericksun22jason的个人技术博客，完美适配手机浏览">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dericksun22jason | 个人主页</title>
+    <meta name="description" content="dericksun22jason的个人技术主页，专注前端与Python">
     <meta name="theme-color" content="#4361ee">
     
-    <!-- PWA 移动端增强 -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    
-    <!-- 预加载关键资源 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
-        /* 基础重置 - 移动端优化 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* 移除移动端点击高亮 */
-        }
-        
         :root {
             --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #f72585;
-            --light: #f8f9fa;
-            --dark: #2b2d42;
-            --text: #333333;
-            --text-light: #666666;
-            --radius: 12px;
-            --shadow: 0 4px 12px rgba(0,0,0,0.08);
-            --shadow-hover: 0 8px 24px rgba(0,0,0,0.12);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-dark: #3a0ca3;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --card-bg: #fff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --radius: 16px;
+            --transition: all 0.3s ease;
         }
         
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-            -webkit-text-size-adjust: 100%; /* 防止字体自动调整 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text: #e0e0e0;
+                --text-light: #aaa;
+                --bg: #121212;
+                --card-bg: #1e1e1e;
+            }
+            body { background: #0a0a0a; }
         }
         
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.7;
             color: var(--text);
-            background-color: var(--light);
-            overflow-x: hidden;
-            padding-top: env(safe-area-inset-top); /* iPhone安全区域 */
-            padding-bottom: env(safe-area-inset-bottom);
+            background: var(--bg);
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
         
-        /* 容器 - 移动端优化 */
         .container {
-            width: 100%;
-            max-width: 100%;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 0 16px;
+            padding: 0 20px;
         }
         
-        @media (min-width: 640px) {
-            .container {
-                max-width: 640px;
-                padding: 0 20px;
-            }
-        }
-        
-        @media (min-width: 768px) {
-            .container {
-                max-width: 768px;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .container {
-                max-width: 1024px;
-            }
-        }
-        
-        /* 移动端导航栏 */
-        .mobile-header {
+        /* 顶部导航 */
+        header {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: white;
+            top: 0; left: 0; right: 0;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
             box-shadow: var(--shadow);
             z-index: 1000;
-            padding: 12px 16px;
+            height: 64px;
+        }
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 60px;
+            height: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        
         .logo {
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.4rem;
+            font-weight: bold;
             color: var(--primary);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
-        
-        .mobile-menu-toggle {
-            width: 44px; /* 触摸友好尺寸 */
-            height: 44px;
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 64px; left: 0; right: 0;
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+        }
+        .nav-links.active { display: flex; }
+        .nav-links a {
+            padding: 16px 20px;
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .nav-links a:hover { background: rgba(67,97,238,0.1); color: var(--primary); }
+        .menu-btn {
+            font-size: 1.6rem;
             background: none;
             border: none;
-            font-size: 1.5rem;
-            color: var(--dark);
+            color: var(--text);
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius);
-            transition: var(--transition);
-        }
-        
-        .mobile-menu-toggle:active {
-            background: rgba(67, 97, 238, 0.1);
-        }
-        
-        .mobile-nav {
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
-            background: white;
-            box-shadow: var(--shadow);
-            z-index: 999;
-            transform: translateY(-100%);
-            opacity: 0;
-            transition: var(--transition);
-            padding: 20px;
-            border-radius: 0 0 var(--radius) var(--radius);
-        }
-        
-        .mobile-nav.active {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        
-        .mobile-nav-links {
-            list-style: none;
-        }
-        
-        .mobile-nav-links li {
-            margin-bottom: 12px;
-        }
-        
-        .mobile-nav-links a {
-            display: block;
-            padding: 12px 16px;
-            color: var(--dark);
-            text-decoration: none;
-            font-weight: 500;
-            border-radius: var(--radius);
-            transition: var(--transition);
-        }
-        
-        .mobile-nav-links a:active,
-        .mobile-nav-links a:hover {
-            background: rgba(67, 97, 238, 0.1);
-            color: var(--primary);
-        }
-        
-        /* 英雄区域 - 移动端优化 */
-        .hero {
-            padding: 100px 0 60px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            margin-top: 60px; /* 为固定导航栏留出空间 */
-            text-align: center;
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .hero h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            line-height: 1.2;
-        }
-        
-        .hero .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        /* 按钮 - 触摸友好 */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 28px;
-            min-height: 48px; /* 最小触摸尺寸 */
-            min-width: 120px;
-            background: white;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: var(--radius);
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
-            -webkit-appearance: none;
-            gap: 8px;
-        }
-        
-        .btn:active {
-            transform: scale(0.98);
-        }
-        
-        .btn-primary {
-            background: var(--accent);
-            color: white;
-        }
-        
-        .btn-outline {
-            background: transparent;
-            border: 2px solid white;
-            color: white;
-        }
-        
-        .btn-outline:active {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        /* 主要内容区域 */
-        main {
-            padding: 60px 0;
-        }
-        
-        section {
-            margin-bottom: 60px;
-            scroll-margin-top: 80px; /* 锚点跳转偏移 */
-        }
-        
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 30px;
-            color: var(--dark);
-            text-align: center;
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-        
-        /* 卡片 - 移动端优化 */
-        .card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 24px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            margin-bottom: 20px;
-        }
-        
-        .card:last-child {
-            margin-bottom: 0;
-        }
-        
-        .card:active {
-            box-shadow: var(--shadow-hover);
-        }
-        
-        /* 关于我 - 移动端布局 */
-        .about-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
+            padding: 8px;
         }
         
         @media (min-width: 768px) {
-            .about-grid {
-                flex-direction: row;
-                align-items: center;
-            }
+            .nav-links { display: flex; flex-direction: row; position: static; box-shadow: none; }
+            .nav-links a { border: none; padding: 0 20px; }
+            .menu-btn { display: none; }
         }
         
+        /* 主内容 */
+        main { padding-top: 80px; }
+        section { padding: 80px 0; }
+        h1 { font-size: 2.5rem; margin-bottom: 16px; color: var(--primary); text-align: center; }
+        .subtitle { text-align: center; font-size: 1.2rem; color: var(--text-light); margin-bottom: 40px; }
+        
+        .about {
+            display: grid;
+            gap: 40px;
+            align-items: center;
+            grid-template-columns: 1fr;
+        }
+        @media (min-width: 768px) {
+            .about { grid-template-columns: 1fr 1fr; }
+        }
         .avatar {
             text-align: center;
+            font-size: 6rem;
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
         }
         
-        .avatar-img {
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 50%;
-            margin: 0 auto 20px;
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .card {
+            background: var(--card-bg);
+            padding: 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .card:hover { transform: translateY(-8px); }
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .tag {
+            background: rgba(67,97,238,0.1);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+        @media (min-width: 640px) {
+            .projects-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+        }
+        .project {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .project-img {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 3rem;
-            box-shadow: var(--shadow);
         }
+        .project-body { padding: 24px; }
+        .links { margin-top: 16px; display: flex; gap: 16px; }
+        .links a { color: var(--primary); text-decoration: none; }
         
-        .avatar h3 {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-            color: var(--dark);
-        }
-        
-        .avatar p {
-            color: var(--text-light);
-        }
-        
-        /* 技能标签 - 移动端优化 */
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        
-        .skill-category h3 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .skill-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .skill-tag {
-            padding: 8px 16px;
-            background: rgba(67, 97, 238, 0.1);
-            color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-        
-        .skill-tag:active {
-            background: var(--primary);
-            color: white;
-            transform: scale(1.05);
-        }
-        
-        /* 项目网格 - 移动端单列 */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
-        }
-        
-        @media (min-width: 640px) {
-            .projects-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            }
-        }
-        
-        .project-card {
-            background: white;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-        
-        .project-card:active {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-        }
-        
-        .project-image {
-            height: 180px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2.5rem;
-        }
-        
-        .project-content {
-            padding: 20px;
-        }
-        
-        .project-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
-        
-        .project-desc {
-            color: var(--text-light);
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-        
-        .project-links {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            padding: 8px 0;
-            min-height: 40px;
-        }
-        
-        .project-link:active {
-            color: var(--accent);
-        }
-        
-        /* 联系表单 - 移动端优化 */
-        .contact-form {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--dark);
-        }
-        
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1px solid #ddd;
-            border-radius: var(--radius);
-            font-family: inherit;
-            font-size: 1rem;
-            transition: var(--transition);
-            -webkit-appearance: none;
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
-        }
-        
-        /* 页脚 - 移动端优化 */
         footer {
-            background: var(--dark);
-            color: white;
-            padding: 50px 0 30px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        @media (min-width: 640px) {
-            .footer-content {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
-        }
-        
-        .footer-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: white;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-block;
-            padding: 2px 0;
-        }
-        
-        .footer-links a:active {
-            color: white;
-            transform: translateX(5px);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .social-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: white;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        
-        .social-link:active {
-            background: var(--primary);
-            transform: scale(1.1);
-        }
-        
-        .copyright {
             text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
+            padding: 40px 0;
+            color: var(--text-light);
             font-size: 0.9rem;
-        }
-        
-        /* 移动端专用样式 */
-        @media (max-width: 767px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .hero .subtitle {
-                font-size: 1rem;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-            }
-            
-            .card {
-                padding: 20px;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-            
-            .project-links {
-                flex-direction: column;
-            }
-            
-            /* 触摸反馈优化 */
-            a, button, .card, .skill-tag {
-                -webkit-tap-highlight-color: rgba(67, 97, 238, 0.1);
-            }
-            
-            /* 防止长按弹出菜单 */
-            .no-context-menu {
-                -webkit-touch-callout: none;
-                user-select: none;
-            }
-        }
-        
-        /* 小屏幕手机优化 */
-        @media (max-width: 360px) {
-            html {
-                font-size: 15px;
-            }
-            
-            .container {
-                padding: 0 12px;
-            }
-            
-            .hero {
-                padding: 80px 0 40px;
-            }
-            
-            .avatar-img {
-                width: 120px;
-                height: 120px;
-                font-size: 2.5rem;
-            }
-        }
-        
-        /* 横屏模式优化 */
-        @media (orientation: landscape) and (max-height: 500px) {
-            .hero {
-                padding: 80px 0 40px;
-                min-height: auto;
-            }
-            
-            .mobile-header {
-                height: 50px;
-                padding: 8px 16px;
-            }
-            
-            .mobile-nav {
-                top: 50px;
-            }
-            
-            .hero {
-                margin-top: 50px;
-            }
-        }
-        
-        /* 深色模式支持 */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --light: #1a1a1a;
-                --dark: #ffffff;
-                --text: #e0e0e0;
-                --text-light: #a0a0a0;
-            }
-            
-            body {
-                background-color: #121212;
-            }
-            
-            .card,
-            .project-card,
-            .mobile-header,
-            .mobile-nav {
-                background: #2d2d2d;
-            }
-            
-            .form-group input,
-            .form-group textarea {
-                background: #3d3d3d;
-                border-color: #444;
-                color: white;
-            }
-            
-            .form-group input:focus,
-            .form-group textarea:focus {
-                border-color: var(--primary);
-                box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-            }
-        }
-        
-        /* 加载动画 */
-        .loading {
-            opacity: 0;
-            animation: fadeIn 0.5s ease forwards;
-        }
-        
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-        
-        /* 滚动条优化 */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary);
         }
     </style>
 </head>
 <body>
-    <!-- 移动端导航栏 -->
-    <header class="mobile-header">
-        <a href="#" class="logo">
-            <i class="fas fa-laptop-code"></i>
-            <span>dericksun22jason</span>
-        </a>
-        <button class="mobile-menu-toggle" id="menuToggle" aria-label="打开菜单">
-            <i class="fas fa-bars"></i>
-        </button>
-        <nav class="mobile-nav" id="mobileNav">
-            <ul class="mobile-nav-links">
-                <li><a href="#home">首页</a></li>
-                <li><a href="#about">关于我</a></li>
-                <li><a href="#skills">技能</a></li>
-                <li><a href="#projects">项目</a></li>
-                <li><a href="#contact">联系</a></li>
-            </ul>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">dericksun22jason</a>
+            <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+            <div class="nav-links" id="navLinks">
+                <a href="#home">首页</a>
+                <a href="#about">关于</a>
+                <a href="#skills">技能</a>
+                <a href="#projects">项目</a>
+                <a href="#contact">联系</a>
+            </div>
         </nav>
     </header>
 
-    <!-- 英雄区域 -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <h1>dericksun22jason</h1>
-                <p class="subtitle">个人技术博客 · 学习记录 · 移动端优化</p>
-                <div class="hero-buttons">
-                    <a href="#about" class="btn btn-primary">
-                        <i class="fas fa-user"></i>
-                        关于我
-                    </a>
-                    <a href="#projects" class="btn btn-outline">
-                        <i class="fas fa-code"></i>
-                        查看项目
-                    </a>
+    <main>
+        <section id="home" class="container">
+            <h1>你好，我是 dericksun22jason</h1>
+            <p class="subtitle">前端爱好者 · Python 玩家 · 持续学习中</p>
+        </section>
+
+        <section id="about" class="container">
+            <div class="about">
+                <div class="avatar"><i class="fas fa-user"></i></div>
+                <div>
+                    <h2>关于我</h2>
+                    <p>热爱写代码，专注前端开发与Python自动化。喜欢折腾移动端优化、响应式设计，也在探索各种有趣的技术。</p>
+                    <p>这个网站就是用纯 HTML + CSS + 少量 JS 搭建的单文件个人站，专为手机优化。</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 主要内容 -->
-    <main class="container">
-        <!-- 关于我 -->
-        <section id="about" class="loading">
-            <h2 class="section-title">关于我</h2>
-            <div class="about-grid">
-                <div class="avatar">
-                    <div class="avatar-img">
-                        <i class="fas fa-user"></i>
+        <section id="skills" class="container">
+            <h2 style="text-align:center;margin-bottom:40px;">技术技能</h2>
+            <div class="skills-grid">
+                <div class="card">
+                    <h3><i class="fas fa-code"></i> 前端</h3>
+                    <div class="skill-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">响应式设计</span>
+                        <span class="tag">移动端优化</span>
                     </div>
-                    <h3>dericksun22jason</h3>
-                    <p>技术爱好者</p>
                 </div>
                 <div class="card">
-                    <h3 style="margin-bottom: 15px;">欢迎访问我的个人站</h3>
-                    <p style="margin-bottom: 15px;">这是一个完全为移动端优化的个人技术博客，记录我的学习历程和技术探索。</p>
-                    <p style="margin-bottom: 15px;">我专注于前端开发、Python自动化和各种有趣的技术实践。</p>
-                    <p>这个网站使用纯HTML/CSS/JavaScript构建，完全响应式设计，在手机和电脑上都能完美显示。</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 技能 -->
-        <section id="skills" class="loading">
-            <h2 class="section-title">技术栈</h2>
-            <div class="skills-container">
-                <div class="skill-category card">
-                    <h3><i class="fas fa-code"></i> 前端技术</h3>
-                    <div class="skill-items">
-                        <span class="skill-tag">HTML5</span>
-                        <span class="skill-tag">CSS3</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">响应式设计</span>
-                        <span class="skill-tag">移动端优化</span>
-                    </div>
-                </div>
-                
-                <div class="skill-category card">
-                    <h3><i class="fas fa-server"></i> 后端技术</h3>
-                    <div class="skill-items">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Flask</span>
-                        <span class="skill-tag">REST API</span>
-                        <span class="skill-tag">SQLite</span>
-                    </div>
-                </div>
-                
-                <div class="skill-category card">
-                    <h3><i class="fas fa-tools"></i> 开发工具</h3>
-                    <div class="skill-items">
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">GitHub</span>
-                        <span class="skill-tag">VS Code</span>
-                        <span class="skill-tag">命令行</span>
-                        <span class="skill-tag">GitHub Pages</span>
+                    <h3><i class="fas fa-server"></i> 后端/工具</h3>
+                    <div class="skill-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Flask</span>
+                        <span class="tag">Git</span>
+                        <span class="tag">GitHub</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 项目 -->
-        <section id="projects" class="loading">
-            <h2 class="section-title">我的项目</h2>
+        <section id="projects" class="container">
+            <h2 style="text-align:center;margin-bottom:40px;">项目展示</h2>
             <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">移动端优化网站</h3>
-                        <p class="project-desc">当前网站，专为手机和平板优化，支持触摸操作和深色模式。</p>
-                        <div class="project-links">
-                            <a href="https://github.com/dericksun22jason" class="project-link" target="_blank">
-                                <i class="fab fa-github"></i> GitHub
-                            </a>
-                            <a href="https://dericksun22jason.github.io" class="project-link" target="_blank">
-                                <i class="fas fa-external-link-alt"></i> 访问网站
-                            </a>
+                <div class="project">
+                    <div class="project-img"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="project-body">
+                        <h3>移动端个人网站</h3>
+                        <p>当前这个网站，纯静态、手机优先、支持深色模式。</p>
+                        <div class="links">
+                            <a href="https://github.com/dericksun22jason" target="_blank"><i class="fab fa-github"></i> 源码</a>
                         </div>
                     </div>
                 </div>
-                
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Python自动化工具</h3>
-                        <p class="project-desc">文件整理、数据处理的自动化脚本，提高工作效率。</p>
-                        <div class="project-links">
-                            <a href="#" class="project-link">
-                                <i class="fab fa-github"></i> 源代码
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-terminal"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">命令行工具集</h3>
-                        <p class="project-desc">实用的Shell脚本集合，优化开发工作流程。</p>
-                        <div class="project-links">
-                            <a href="#" class="project-link">
-                                <i class="fab fa-github"></i> 源代码
-                            </a>
-                        </div>
+                <div class="project">
+                    <div class="project-img"><i class="fas fa-robot"></i></div>
+                    <div class="project-body">
+                        <h3>Python 自动化脚本</h3>
+                        <p>文件整理、数据抓取、日常任务自动化。</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 联系 -->
-        <section id="contact" class="loading">
-            <h2 class="section-title">联系我</h2>
-            <div class="contact-form card">
-                <div style="margin-bottom: 25px;">
-                    <h3 style="margin-bottom: 10px;">留言交流</h3>
-                    <p style="color: var(--text-light);">欢迎交流技术问题或学习心得</p>
-                </div>
-                
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">昵称</label>
-                        <input type="text" id="name" placeholder="请输入你的昵称" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">留言内容</label>
-                        <textarea id="message" rows="4" placeholder="有什么想分享的吗？" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
-                        <i class="fas fa-paper-plane"></i>
-                        发送留言
-                    </button>
-                </form>
-                
-                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
-                    <h4 style="margin-bottom: 10px;">其他联系方式</h4>
-                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px;">
-                        <a href="mailto:dericksun22@gmail.com" style="display: inline-flex; align-items: center; gap: 8px; color: var(--primary); text-decoration: none;">
-                            <i class="fas fa-envelope"></i>
-                            <span>邮箱</span>
-                        </a>
-                        <a href="https://github.com/dericksun22jason" style="display: inline-flex; align-items: center; gap: 8px; color: var(--primary); text-decoration: none;">
-                            <i class="fab fa-github"></i>
-                            <span>GitHub</span>
-                        </a>
-                    </div>
-                </div>
+        <section id="contact" class="container">
+            <h2 style="text-align:center;margin-bottom:40px;">联系我</h2>
+            <div style="text-align:center;">
+                <p style="margin-bottom:24px;">欢迎交流技术或分享经验～</p>
+                <p>
+                    <a href="mailto:dericksun22@gmail.com" style="color:var(--primary);margin:0 12px;"><i class="fas fa-envelope"></i> 邮箱</a>
+                    <a href="https://github.com/dericksun22jason" target="_blank" style="color:var(--primary);margin:0 12px;"><i class="fab fa-github"></i> GitHub</a>
+                </p>
             </div>
         </section>
     </main>
 
-    <!-- 页脚 -->
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>dericksun22jason</h3>
-                    <p>个人技术博客</p>
-                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">移动端优化版本</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>快速链接</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home">首页</a></li>
-                        <li><a href="#about">关于我</a></li>
-                        <li><a href="#skills">技能</a></li>
-                        <li><a href="#projects">项目</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>技术栈</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">HTML/CSS</a></li>
-                        <li><a href="#">JavaScript</a></li>
-                        <li><a href="#">Python</a></li>
-                        <li><a href="#">Git/GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>社交链接</h3>
-                    <div class="social-links">
-                        <a href="https://github.com/dericksun22jason" class="social-link" target="_blank" title="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="mailto:dericksun22@gmail.com" class="social-link" title="邮箱">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>© 2024 dericksun22jason. 保留所有权利。</p>
-                <p style="margin-top: 5px; font-size: 0.85rem;">
-                    访问量: <span id="visitCount">1</span> 次 | 
-                    最后更新: 2024年12月 |
-                    设备: <span id="deviceType">未知</span>
-                </p>
-            </div>
+            <p>© 2025 dericksun22jason. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script>
         // 移动端菜单切换
-        const menuToggle = document.getElementById('menuToggle');
-        const mobileNav = document.getElementById('mobileNav');
-        
-        if (menuToggle && mobileNav) {
-            menuToggle.addEventListener('click', () => {
-                mobileNav.classList.toggle('active');
-                menuToggle.innerHTML = mobileNav.classList.contains('active') 
-                    ? '<i class="fas fa-times"></i>' 
-                    : '<i class="fas fa-bars"></i>';
-            });
-            
-            // 点击菜单项关闭菜单
-            document.querySelectorAll('.mobile-nav-links a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileNav.classList.remove('active');
-                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                });
-            });
-            
-            // 点击外部关闭菜单
-            document.addEventListener('click', (e) => {
-                if (!menuToggle.contains(e.target) && !mobileNav.contains(e.target)) {
-                    mobileNav.classList.remove('active');
-                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                }
-            });
-        }
-        
-        // 访问计数器
-        function updateVisitCounter() {
-            let count = localStorage.getItem('siteVisits');
-            if (!count) {
-                count = 1;
-            } else {
-                count = parseInt(count) + 1;
-            }
-            localStorage.setItem('siteVisits', count);
-            
-            const visitCountEl = document.getElementById('visitCount');
-            if (visitCountEl) {
-                visitCountEl.textContent = count;
-            }
-        }
-        
-        // 检测设备类型
-        function detectDevice() {
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            const isTablet = /iPad|Android(?!.*Mobile)/i.test(navigator.userAgent);
-            
-            let deviceType = '电脑';
-            if (isMobile) deviceType = '手机';
-            if (isTablet) deviceType = '平板';
-            
-            const deviceTypeEl = document.getElementById('deviceType');
-            if (deviceTypeEl) {
-                deviceTypeEl.textContent = deviceType;
-            }
-            
-            // 为移动设备添加特殊类
-            if (isMobile || isTablet) {
-                document.body.classList.add('is-mobile');
-            }
-        }
-        
-        // 表单提交处理
-        const contactForm = document.getElementById('contactForm');
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const name = document.getElementById('name').value;
-                const message = document.getElementById('message').value;
-                
-                // 这里实际应该发送到后端
-                // 现在只做前端演示
-                alert(`感谢 ${name} 的留言！\n\n你的留言已记录。\n\n（留言功能仅作演示）`);
-                
-                // 清空表单
-                contactForm.reset();
-                
-                return false;
-            });
-        }
-        
-        // 滚动动画
-        function initScrollAnimations() {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
-            
-            // 观察所有需要动画的元素
-            document.querySelectorAll('.loading').forEach(el => {
-                observer.observe(el);
-            });
-        }
-        
-        // 触摸反馈优化
-        function initTouchFeedback() {
-            document.querySelectorAll('.btn, .skill-tag, .project-link').forEach(el => {
-                el.addEventListener('touchstart', function() {
-                    this.classList.add('active');
-                });
-                
-                el.addEventListener('touchend', function() {
-                    this.classList.remove('active');
-                });
-            });
-        }
-        
-        // 阻止双击缩放
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(event) {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-        
-        // 页面加载完成后初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            updateVisitCounter();
-            detectDevice();
-            initScrollAnimations();
-            initTouchFeedback();
-            
-            // 控制台欢迎信息
-            console.log('%c📱 欢迎访问移动端优化的个人网站！', 'color: #4361ee; font-size: 16px; font-weight: bold;');
-            console.log('%c网站完全响应式，专为手机和平板优化', 'color: #666;');
-            
-            // 延迟加载动画
-            setTimeout(() => {
-                document.querySelectorAll('.loading').forEach(el => {
-                    el.style.opacity = '1';
-                });
-            }, 100);
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
         });
         
-        // PWA 离线支持（基础版）
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(err => {
-                    console.log('ServiceWorker 注册失败:', err);
-                });
+        // 点击链接后关闭菜单（手机端）
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
             });
-        }
-        
-        // 添加到主屏幕提示
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            // 可以在这里显示"添加到主屏幕"按钮
-            console.log('可以添加到主屏幕');
         });
     </script>
 </body>
