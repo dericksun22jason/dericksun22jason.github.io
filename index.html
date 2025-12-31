@@ -264,3 +264,605 @@
     </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dericksun22jason | 个人主页</title>
+    <meta name="description" content="dericksun22jason的个人技术主页，专注前端与Python">
+    <meta name="theme-color" content="#4361ee">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --card-bg: #fff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text: #e0e0e0;
+                --text-light: #aaa;
+                --bg: #121212;
+                --card-bg: #1e1e1e;
+            }
+            body { background: #0a0a0a; }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            min-height: 100vh;
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        header {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            z-index: 1000; height: 64px;
+        }
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            height: 100%; max-width: 1000px; margin: 0 auto; padding: 0 20px;
+        }
+        .logo { font-size: 1.4rem; font-weight: bold; color: var(--primary); text-decoration: none; }
+        .menu-btn { font-size: 1.6rem; background: none; border: none; color: var(--text); cursor: pointer; }
+        .nav-links {
+            display: none; flex-direction: column;
+            position: absolute; top: 64px; left: 0; right: 0;
+            background: var(--card-bg); box-shadow: var(--shadow);
+        }
+        .nav-links.active { display: flex; }
+        .nav-links a {
+            padding: 16px 20px; color: var(--text); text-decoration: none;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .nav-links a:hover { background: rgba(67,97,238,0.1); color: var(--primary); }
+        @media (min-width: 768px) {
+            .nav-links { display: flex; flex-direction: row; position: static; box-shadow: none; }
+            .nav-links a { border: none; padding: 0 20px; }
+            .menu-btn { display: none; }
+        }
+        main { padding-top: 80px; }
+        section { padding: 80px 0; }
+        h1 { font-size: 2.5rem; margin-bottom: 16px; color: var(--primary); text-align: center; }
+        .subtitle { text-align: center; font-size: 1.2rem; color: var(--text-light); margin-bottom: 40px; }
+        .about { display: grid; gap: 40px; grid-template-columns: 1fr; align-items: center; }
+        @media (min-width: 768px) { .about { grid-template-columns: 1fr 1fr; } }
+        .avatar {
+            width: 180px; height: 180px; margin: 0 auto;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 6rem;
+        }
+        .grid {
+            display: grid; gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+        .card, .project, .game-card {
+            background: var(--card-bg); border-radius: var(--radius);
+            box-shadow: var(--shadow); transition: var(--transition); overflow: hidden;
+            cursor: pointer;
+        }
+        .card:hover, .project:hover, .game-card:hover { transform: translateY(-8px); }
+        .card { padding: 28px; }
+        .skill-tags {
+            display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px;
+        }
+        .tag {
+            background: rgba(67,97,238,0.1); color: var(--primary);
+            padding: 8px 16px; border-radius: 50px; font-size: 0.95rem;
+        }
+        .project-img, .game-img {
+            height: 200px; background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 3rem;
+        }
+        .project-body, .game-body { padding: 24px; }
+        .links { margin-top: 16px; display: flex; gap: 16px; }
+        .links a { color: var(--primary); text-decoration: none; }
+        .section-title { text-align: center; margin-bottom: 40px; }
+        footer {
+            text-align: center; padding: 40px 0;
+            color: var(--text-light); font-size: 0.9rem;
+        }
+
+        /* 游戏模态框 */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 2000;
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--card-bg); border-radius: var(--radius);
+            width: 100%; max-width: 500px; max-height: 90vh;
+            overflow: hidden; box-shadow: var(--shadow);
+            display: flex; flex-direction: column;
+        }
+        .modal-header {
+            padding: 16px 20px; background: var(--primary); color: white;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-header h3 { margin: 0; }
+        .close-btn { background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
+        .modal-body { flex: 1; position: relative; }
+        canvas { width: 100%; height: 100%; display: block; background: #000; }
+        .game-info { padding: 12px 20px; text-align: center; color: var(--text-light); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">dericksun22jason</a>
+            <button class="menu-btn" id="menuBtn" aria-label="菜单"><i class="fas fa-bars"></i></button>
+            <div class="nav-links" id="navLinks">
+                <a href="#home">首页</a>
+                <a href="#about">关于</a>
+                <a href="#skills">技能</a>
+                <a href="#projects">项目</a>
+                <a href="#games">游戏</a>
+                <a href="#contact">联系</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="container">
+            <h1>你好，我是 dericksun22jason</h1>
+            <p class="subtitle">前端爱好者 · Python 玩家 · 持续学习中</p>
+        </section>
+
+        <section id="about" class="container">
+            <div class="about">
+                <div class="avatar"><i class="fas fa-user"></i></div>
+                <div>
+                    <h2>关于我</h2>
+                    <p>热爱写代码，专注前端开发与Python自动化。喜欢折腾移动端优化、响应式设计，也在探索各种有趣的技术。</p>
+                    <p>这个网站用纯 HTML + CSS + JavaScript 搭建，包含数据驱动内容和小游戏，专为手机优化。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="container">
+            <h2 class="section-title">技术技能</h2>
+            <div class="grid" id="skillsGrid"></div>
+        </section>
+
+        <section id="projects" class="container">
+            <h2 class="section-title">项目展示</h2>
+            <div class="grid" id="projectsGrid"></div>
+        </section>
+
+        <!-- 新增游戏模块 -->
+        <section id="games" class="container">
+            <h2 class="section-title">小游戏</h2>
+            <p style="text-align:center;color:var(--text-light);margin-bottom:40px;">用纯 JavaScript 实现的休闲小游戏，支持手机触屏操作～</p>
+            <div class="grid" id="gamesGrid"></div>
+        </section>
+
+        <section id="contact" class="container">
+            <h2 class="section-title">联系我</h2>
+            <div style="text-align:center;">
+                <p style="margin-bottom:24px;">欢迎交流技术或分享经验～</p>
+                <p>
+                    <a href="mailto:dericksun22@gmail.com" style="color:var(--primary);margin:0 12px;"><i class="fas fa-envelope"></i> 邮箱</a>
+                    <a href="https://github.com/dericksun22jason" target="_blank" style="color:var(--primary);margin:0 12px;"><i class="fab fa-github"></i> GitHub</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 dericksun22jason. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 游戏模态框 -->
+    <div class="modal" id="gameModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">游戏</h3>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <canvas id="gameCanvas"></canvas>
+            </div>
+            <div class="game-info" id="gameInfo">使用方向键或滑动控制</div>
+        </div>
+    </div>
+
+    <script>
+        // 数据驱动内容
+        const skills = [
+            { icon: "fa-code", title: "前端", tags: ["HTML5", "CSS3", "JavaScript", "响应式设计", "移动端优化"] },
+            { icon: "fa-server", title: "后端/工具", tags: ["Python", "Flask", "Git", "GitHub"] }
+        ];
+
+        const projects = [
+            {
+                icon: "fa-mobile-alt",
+                title: "移动端个人网站",
+                desc: "当前这个网站，纯静态、手机优先、支持深色模式、数据驱动渲染。",
+                links: [{ icon: "fab fa-github", text: "源码", url: "https://github.com/dericksun22jason" }]
+            },
+            {
+                icon: "fa-robot",
+                title: "Python 自动化脚本",
+                desc: "文件整理、数据抓取、日常任务自动化。",
+                links: []
+            }
+        ];
+
+        const games = [
+            { icon: "fa-gamepad", title: "贪吃蛇", type: "snake" },
+            { icon: "fa-puzzle-piece", title: "2048", type: "2048" }
+        ];
+
+        // 渲染函数
+        function renderSkills() {
+            document.getElementById('skillsGrid').innerHTML = skills.map(s => `
+                <div class="card">
+                    <h3><i class="fas ${s.icon}"></i> ${s.title}</h3>
+                    <div class="skill-tags">
+                        ${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderProjects() {
+            document.getElementById('projectsGrid').innerHTML = projects.map(p => `
+                <div class="project">
+                    <div class="project-img"><i class="fas ${p.icon}"></i></div>
+                    <div class="project-body">
+                        <h3>${p.title}</h3>
+                        <p>${p.desc}</p>
+                        ${p.links.length ? `<div class="links">
+                            ${p.links.map(l => `<a href="${l.url}" target="_blank"><i class="${l.icon}"></i> ${l.text}</a>`).join('')}
+                        </div>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderGames() {
+            document.getElementById('gamesGrid').innerHTML = games.map(g => `
+                <div class="game-card" data-type="${g.type}">
+                    <div class="game-img"><i class="fas ${g.icon}"></i></div>
+                    <div class="game-body">
+                        <h3>${g.title}</h3>
+                        <p>点击开始玩</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 菜单与平滑滚动
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(a => {
+            a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active'));
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // 模态框控制
+        const modal = document.getElementById('gameModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const gameInfo = document.getElementById('gameInfo');
+        document.getElementById('closeModal').onclick = () => modal.classList.remove('active');
+        modal.onclick = e => { if (e.target === modal) modal.classList.remove('active'); };
+
+        // 游戏卡片点击打开对应游戏
+        document.getElementById('gamesGrid').addEventListener('click', e => {
+            const card = e.target.closest('.game-card');
+            if (!card) return;
+            const type = card.dataset.type;
+            modalTitle.textContent = card.querySelector('h3').textContent;
+            modal.classList.add('active');
+            startGame(type);
+        });
+
+        // 调整 canvas 大小
+        function resizeCanvas() {
+            const size = Math.min(window.innerWidth - 40, 500);
+            canvas.width = size;
+            canvas.height = size;
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        // ==================== 贪吃蛇 ====================
+        let snakeGame = null;
+        function startSnake() {
+            resizeCanvas();
+            let snake = [{x: 200, y: 200}];
+            let dx = 20, dy = 0;
+            let food = randomFood();
+            let score = 0;
+            let gameOver = false;
+
+            function randomFood() {
+                return {
+                    x: Math.floor(Math.random() * (canvas.width / 20)) * 20,
+                    y: Math.floor(Math.random() * (canvas.height / 20)) * 20
+                };
+            }
+
+            function draw() {
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // 画食物
+                ctx.fillStyle = '#f44';
+                ctx.fillRect(food.x, food.y, 20, 20);
+
+                // 画蛇
+                snake.forEach((seg, i) => {
+                    ctx.fillStyle = i === 0 ? '#4f8' : '#8f8';
+                    ctx.fillRect(seg.x, seg.y, 20, 20);
+                });
+
+                if (gameOver) {
+                    ctx.fillStyle = 'rgba(0,0,0,0.7)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = '#fff';
+                    ctx.font = '40px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('游戏结束', canvas.width/2, canvas.height/2 - 30);
+                    ctx.font = '24px sans-serif';
+                    ctx.fillText(`得分: ${score}`, canvas.width/2, canvas.height/2 + 20);
+                    ctx.fillText('点击重新开始', canvas.width/2, canvas.height/2 + 60);
+                }
+            }
+
+            function update() {
+                if (gameOver) return;
+                const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+
+                // 撞墙
+                if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
+                    gameOver = true; draw(); return;
+                }
+
+                // 撞自己
+                if (snake.some(seg => seg.x === head.x && seg.y === head.y)) {
+                    gameOver = true; draw(); return;
+                }
+
+                snake.unshift(head);
+
+                // 吃食物
+                if (head.x === food.x && head.y === food.y) {
+                    score++;
+                    food = randomFood();
+                } else {
+                    snake.pop();
+                }
+
+                draw();
+            }
+
+            draw();
+            const interval = setInterval(update, 100);
+
+            // 控制
+            const handleDir = e => {
+                e.preventDefault();
+                const key = e.key || e;
+                if (['ArrowUp', 'w', 'W'].includes(key) && dy === 0) { dx = 0; dy = -20; }
+                if (['ArrowDown', 's', 'S'].includes(key) && dy === 0) { dx = 0; dy = 20; }
+                if (['ArrowLeft', 'a', 'A'].includes(key) && dx === 0) { dx = -20; dy = 0; }
+                if (['ArrowRight', 'd', 'D'].includes(key) && dx === 0) { dx = 20; dy = 0; }
+            };
+
+            document.addEventListener('keydown', handleDir);
+
+            // 触屏滑动
+            let touchStart = null;
+            canvas.addEventListener('touchstart', e => { touchStart = e.touches[0]; e.preventDefault(); });
+            canvas.addEventListener('touchmove', e => {
+                if (!touchStart) return;
+                const touch = e.touches[0];
+                const diffX = touch.clientX - touchStart.clientX;
+                const diffY = touch.clientY - touchStart.clientY;
+                if (Math.abs(diffX) > 30 || Math.abs(diffY) > 30) {
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        handleDir(diffX > 0 ? 'ArrowRight' : 'ArrowLeft');
+                    } else {
+                        handleDir(diffY > 0 ? 'ArrowDown' : 'ArrowUp');
+                    }
+                    touchStart = null;
+                }
+                e.preventDefault();
+            });
+
+            // 点击重新开始
+            canvas.addEventListener('click', () => {
+                if (gameOver) {
+                    snake = [{x: 200, y: 200}];
+                    dx = 20; dy = 0;
+                    food = randomFood();
+                    score = 0;
+                    gameOver = false;
+                    draw();
+                }
+            });
+
+            return () => {
+                clearInterval(interval);
+                document.removeEventListener('keydown', handleDir);
+            };
+        }
+
+        // ==================== 2048 ====================
+        function start2048() {
+            resizeCanvas();
+            const gridSize = 4;
+            const cellSize = canvas.width / gridSize;
+            let board = Array(gridSize).fill().map(() => Array(gridSize).fill(0));
+            let score = 0;
+
+            // 初始化两个随机方块
+            addRandomTile(); addRandomTile();
+
+            function addRandomTile() {
+                const empty = [];
+                for (let i = 0; i < gridSize; i++) {
+                    for (let j = 0; j < gridSize; j++) {
+                        if (board[i][j] === 0) empty.push({i, j});
+                    }
+                }
+                if (empty.length) {
+                    const {i, j} = empty[Math.floor(Math.random() * empty.length)];
+                    board[i][j] = Math.random() < 0.9 ? 2 : 4;
+                }
+            }
+
+            function draw() {
+                ctx.fillStyle = '#bbb';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < gridSize; i++) {
+                    for (let j = 0; j < gridSize; j++) {
+                        const val = board[i][j];
+                        const x = j * cellSize + 5;
+                        const y = i * cellSize + 5;
+                        const size = cellSize - 10;
+
+                        if (val === 0) {
+                            ctx.fillStyle = '#ccc';
+                        } else {
+                            const colors = {
+                                2: '#eee', 4: '#edd', 8: '#fb8', 16: '#f96', 32: '#f75',
+                                64: '#f53', 128: '#ec7', 256: '#ec6', 512: '#ec5',
+                                1024: '#ec4', 2048: '#ec3'
+                            };
+                            ctx.fillStyle = colors[val] || '#000';
+                        }
+                        ctx.fillRect(x, y, size, size);
+
+                        if (val !== 0) {
+                            ctx.fillStyle = val <= 8 ? '#777' : '#fff';
+                            ctx.font = val >= 1024 ? 'bold 32px sans-serif' : 'bold 48px sans-serif';
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            ctx.fillText(val, x + size/2, y + size/2);
+                        }
+                    }
+                }
+
+                // 分数
+                gameInfo.textContent = `得分: ${score}   ←↑→↓ 或滑动方向`;
+            }
+
+            function move(dir) {
+                let moved = false;
+                const newBoard = board.map(row => row.slice());
+
+                // 简化版移动逻辑（向右为例，其他方向旋转后再处理）
+                const rotate = () => board = board[0].map((_, i) => board.map(row => row[i]).reverse());
+
+                const times = { left: 0, up: 1, right: 2, down: 3 }[dir];
+                for (let t = 0; t < times; t++) rotate();
+
+                for (let i = 0; i < gridSize; i++) {
+                    let row = board[i].filter(v => v !== 0);
+                    for (let j = 0; j < row.length - 1; j++) {
+                        if (row[j] === row[j+1]) {
+                            row[j] *= 2;
+                            score += row[j];
+                            row.splice(j+1, 1);
+                            moved = true;
+                        }
+                    }
+                    row.push(...Array(gridSize - row.length).fill(0));
+                    if (row.join() !== newBoard[i].join()) moved = true;
+                    board[i] = row;
+                }
+
+                for (let t = 0; t < (4 - times) % 4; t++) rotate();
+
+                if (moved) addRandomTile();
+                draw();
+            }
+
+            draw();
+
+            const handleDir = e => {
+                e.preventDefault();
+                const key = e.key || e;
+                if (key === 'ArrowLeft') move('left');
+                if (key === 'ArrowUp') move('up');
+                if (key === 'ArrowRight') move('right');
+                if (key === 'ArrowDown') move('down');
+            };
+
+            document.addEventListener('keydown', handleDir);
+
+            // 触屏滑动
+            let startX, startY;
+            canvas.addEventListener('touchstart', e => {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                e.preventDefault();
+            });
+            canvas.addEventListener('touchend', e => {
+                if (!startX || !startY) return;
+                const endX = e.changedTouches[0].clientX;
+                const endY = e.changedTouches[0].clientY;
+                const diffX = endX - startX;
+                const diffY = endY - startY;
+                if (Math.abs(diffX) > 30 || Math.abs(diffY) > 30) {
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        handleDir(diffX > 0 ? 'ArrowRight' : 'ArrowLeft');
+                    } else {
+                        handleDir(diffY > 0 ? 'ArrowDown' : 'ArrowUp');
+                    }
+                }
+                startX = null; startY = null;
+            });
+
+            return () => document.removeEventListener('keydown', handleDir);
+        }
+
+        // 启动对应游戏
+        function startGame(type) {
+            if (snakeGame) snakeGame(); // 清理上一个游戏
+            resizeCanvas();
+            if (type === 'snake') {
+                snakeGame = startSnake();
+                gameInfo.textContent = '使用方向键或滑动控制，吃食物变长，得分越高越好！';
+            } else if (type === '2048') {
+                snakeGame = start2048();
+                gameInfo.textContent = '滑动合并相同数字，合成 2048 就算赢啦！';
+            }
+        }
+
+        // 初始化
+        renderSkills();
+        renderProjects();
+        renderGames();
+    </script>
+</body>
+</html>
