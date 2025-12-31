@@ -9,6 +9,7 @@
             margin: 0; padding: 20px; 
             font-family: -apple-system, 'PingFang SC', sans-serif; 
             text-align: center; background: #121212; color: #fff;
+            touch-action: manipulation; /* 优化手机触控 */
         }
         h1 { margin-bottom: 10px; }
         canvas { 
@@ -18,27 +19,45 @@
             border: 4px solid #4361ee;
             border-radius: 16px;
             max-width: 95vw;
+            box-shadow: 0 0 20px rgba(67,97,238,0.5);
         }
-        .info { margin: 20px; color: #aaa; }
-        button { padding: 12px 24px; font-size: 1.2rem; background: #4361ee; color: white; border: none; border-radius: 8px; margin-top: 20px; }
+        .info { margin: 20px; color: #aaa; font-size: 1.1rem; }
+        button { 
+            padding: 12px 32px; font-size: 1.2rem; background: #4361ee; 
+            color: white; border: none; border-radius: 12px; 
+            margin-top: 20px; cursor: pointer;
+        }
+        button:active { background: #3a0ca3; }
     </style>
 </head>
 <body>
     <h1>贪吃蛇小游戏</h1>
-    <p>手机上用手指滑动控制方向 · 电脑用方向键</p>
-    <canvas id="canvas" width="360" height="360"></canvas>
-    <div class="info">得分: <span id="score">0</span></div>
+    <p>手机手指滑动控制方向 · 电脑用方向键 ↑←↓→</p>
+    <canvas id="canvas"></canvas>
+    <div class="info">当前得分: <span id="score">0</span></div>
     <button onclick="restart()">重新开始</button>
 
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-        const size = 20;
+        let cellSize = 20;
+        let cols, rows;
+
+        function resizeCanvas() {
+            const maxSize = Math.min(window.innerWidth - 40, 600);
+            canvas.width = maxSize - (maxSize % cellSize);
+            canvas.height = canvas.width; // 正方形
+            cols = canvas.width / cellSize;
+            rows = canvas.height / cellSize;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
         let snake, dx, dy, food, score, gameOver, interval;
 
         function init() {
-            snake = [{x: 180, y: 180}];
-            dx = size; dy = 0;
+            snake = [{x: Math.floor(cols/2), y: Math.floor(rows/2)}];
+            dx = 1; dy = 0;
             food = randomFood();
             score = 0;
             gameOver = false;
@@ -49,44 +68,66 @@
         }
 
         function randomFood() {
-            return {
-                x: Math.floor(Math.random() * (canvas.width / size)) * size,
-                y: Math.floor(Math.random() * (canvas.height / size)) * size
-            };
+            let x, y;
+            do {
+                x = Math.floor(Math.random() * cols);
+                y = Math.floor(Math.random() * rows);
+            } while (snake.some(s => s.x === x && s.y === y));
+            return {x, y};
         }
 
         function draw() {
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // 食物
+            // 食物（圆形更可爱）
             ctx.fillStyle = '#ff4444';
-            ctx.fillRect(food.x + 2, food.y + 2, size - 4, size - 4);
+            ctx.beginPath();
+            ctx.arc(food.x * cellSize + cellSize/2, food.y * cellSize + cellSize/2, cellSize/2 - 3, 0, Math.PI*2);
+            ctx.fill();
 
             // 蛇
             snake.forEach((seg, i) => {
-                ctx.fillStyle = i === 0 ? '#44ff44' : '#88ff88';
-                ctx.fillRect(seg.x + 2, seg.y + 2, size - 4, size - 4);
+                ctx.fillStyle = i === 0 ? '#44ff88' : '#88ffaa';
+                ctx.fillRect(seg.x * cellSize + 2, seg.y * cellSize + 2, cellSize - 4, cellSize - 4);
+                // 眼睛（头）
+                if (i === 0) {
+                    ctx.fillStyle = '#000';
+                    ctx.fillRect(seg.x * cellSize + 5, seg.y * cellSize + 5, 4, 4);
+                    ctx.fillRect(seg.x * cellSize + cellSize - 9, seg.y * cellSize + 5, 4, 4);
+                }
             });
 
             if (gameOver) {
                 ctx.fillStyle = 'rgba(0,0,0,0.7)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.fillStyle = '#fff';
-                ctx.font = '40px sans-serif';
-                ctx.fillText('游戏结束', 70, 160);
-                ctx.font = '24px sans-serif';
-                ctx.fillText('最终得分: ' + score, 100, 210);
+                ctx.font = 'bold 40px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('游戏结束！', canvas.width/2, canvas.height/2 - 40);
+                ctx.font = '28px sans-serif';
+                ctx.fillText(`最终得分: ${score}`, canvas.width/2, canvas.height/2 + 10);
+                ctx.font = '22px sans-serif';
+                ctx.fillText('点击按钮重新开始', canvas.width/2, canvas.height/2 + 60);
             }
         }
 
         function update() {
             if (gameOver) return;
+
             const head = {x: snake[0].x + dx, y: snake[0].y + dy};
 
-            // 撞墙或自己
-            if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height ||
-                snake.some(s => s.x === head.x && s.y === head.y)) {
+            // 撞墙
+            if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) {
+                gameOver = true;
+                draw();
+                clearInterval(interval);
+                return;
+            }
+
+            // 撞自己
+            if (snake.some(s => s.x === head.x && s.y === head.y)) {
                 gameOver = true;
                 draw();
                 clearInterval(interval);
@@ -94,6 +135,8 @@
             }
 
             snake.unshift(head);
+
+            // 吃食物
             if (head.x === food.x && head.y === food.y) {
                 score++;
                 document.getElementById('score').textContent = score;
@@ -101,46 +144,49 @@
             } else {
                 snake.pop();
             }
+
             draw();
         }
 
         // 键盘控制
         document.addEventListener('keydown', e => {
-            if (e.key === 'ArrowUp' && dy === 0) { dx = 0; dy = -size; }
-            if (e.key === 'ArrowDown' && dy === 0) { dx = 0; dy = size; }
-            if (e.key === 'ArrowLeft' && dx === 0) { dx = -size; dy = 0; }
-            if (e.key === 'ArrowRight' && dx === 0) { dx = size; dy = 0; }
+            if (e.key === 'ArrowUp' && dy === 0) { dx = 0; dy = -1; }
+            if (e.key === 'ArrowDown' && dy === 0) { dx = 0; dy = 1; }
+            if (e.key === 'ArrowLeft' && dx === 0) { dx = -1; dy = 0; }
+            if (e.key === 'ArrowRight' && dx === 0) { dx = 1; dy = 0; }
         });
 
-        // 手机触屏滑动控制
-        let touchStartX = 0, touchStartY = 0;
+        // 手机滑动控制（更灵敏）
+        let startX, startY;
         canvas.addEventListener('touchstart', e => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
             e.preventDefault();
-        });
+        }, {passive: false});
+
         canvas.addEventListener('touchmove', e => {
-            if (!touchStartX || !touchStartY) return;
-            let x = e.touches[0].clientX - touchStartX;
-            let y = e.touches[0].clientY - touchStartY;
-            if (Math.abs(x) > 30 || Math.abs(y) > 30) {
-                if (Math.abs(x) > Math.abs(y)) {
-                    if (x > 0 && dx === 0) { dx = size; dy = 0; }
-                    else if (x < 0 && dx === 0) { dx = -size; dy = 0; }
+            if (!startX || !startY) return;
+            let diffX = e.touches[0].clientX - startX;
+            let diffY = e.touches[0].clientY - startY;
+
+            if (Math.abs(diffX) > 30 || Math.abs(diffY) > 30) {
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    if (diffX > 0 && dx === 0) { dx = 1; dy = 0; } // 右
+                    else if (diffX < 0 && dx === 0) { dx = -1; dy = 0; } // 左
                 } else {
-                    if (y > 0 && dy === 0) { dx = 0; dy = size; }
-                    else if (y < 0 && dy === 0) { dx = 0; dy = -size; }
+                    if (diffY > 0 && dy === 0) { dx = 0; dy = 1; } // 下
+                    else if (diffY < 0 && dy === 0) { dx = 0; dy = -1; } // 上
                 }
-                touchStartX = 0; touchStartY = 0;
+                startX = null; startY = null;
             }
             e.preventDefault();
-        });
+        }, {passive: false});
 
         function restart() {
             init();
         }
 
-        init(); // 自动开始
+        init(); // 页面加载自动开始
     </script>
 </body>
 </html>
